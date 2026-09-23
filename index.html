@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON NOIR</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+    --black: #0a0805;
+    --black-soft: #111008;
+    --black-card: #16130a;
+    --gold: #c9a227;
+    --gold-bright: #e0b83f;
+    --gold-soft: #d4a574;
+    --gold-glow: rgba(201, 162, 39, 0.4);
+    --cream: #f5f0e8;
+    --text-muted: #8a7f6a;
+    --border: rgba(201, 162, 39, 0.15);
+    --border-strong: rgba(201, 162, 39, 0.4);
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    line-height: 1.8;
+    overflow-x: hidden;
+    font-weight: 300;
+}
+
+h1, h2, h3, h4, .serif {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ============================================================
+   NAVIGATION — FIXED
+   ============================================================ */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 24px 0;
+    transition: all 0.5s ease;
+    background: transparent;
+}
+
+.nav.scrolled {
+    background: rgba(10, 8, 5, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--cream);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.nav-logo::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--gold-glow);
+    animation: dotPulse 2.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 6px 0;
+    transition: color 0.3s;
+    white-space: nowrap;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+    padding: 120px 0 80px;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -20%;
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.15), transparent 70%);
+    animation: slowFloat 20s ease-in-out infinite;
+}
+
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -20%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(212, 165, 116, 0.1), transparent 70%);
+    animation: slowFloat 25s ease-in-out infinite reverse;
+}
+
+@keyframes slowFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -40px) scale(1.1); }
+}
+
+.hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(201, 162, 39, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 162, 39, 0.04) 1px, transparent 1px);
+    background-size: 100px 100px;
+    z-index: 1;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 40px;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 36px;
+    display: inline-block;
+    position: relative;
+    padding: 0 60px;
+}
+
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+}
+
+.hero-eyebrow::before { left: 0; }
+.hero-eyebrow::after { right: 0; }
+
+.hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 9vw, 130px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -3px;
+    color: var(--cream);
+    margin-bottom: 36px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.hero-title .line {
+    display: block;
+    white-space: nowrap;
+}
+
+.hero-title .gold {
+    color: var(--gold);
+    font-style: italic;
+    text-shadow: 0 0 60px var(--gold-glow);
+    display: block;
+    white-space: nowrap;
+}
+
+.hero-title .outline {
+    -webkit-text-stroke: 1px var(--cream);
+    color: transparent;
+    display: block;
+    white-space: nowrap;
+}
+
+.hero-description {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    max-width: 620px;
+    margin: 0 auto 52px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    padding: 0 20px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 18px 42px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    white-space: nowrap;
+}
+
+.btn-gold {
+    background: var(--gold);
+    color: var(--black);
+    border: 1px solid var(--gold);
+}
+
+.btn-gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cream);
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.btn-gold:hover::before { transform: translateY(0); }
+
+.btn-gold span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-gold:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px var(--gold-glow);
+}
+
+.btn-outline {
+    color: var(--gold);
+    border: 1px solid var(--border-strong);
+}
+
+.btn-outline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.btn-outline:hover::before { transform: translateY(0); }
+
+.btn-outline span {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s;
+}
+
+.btn-outline:hover span { color: var(--black); }
+
+.btn-outline:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px var(--gold-glow);
+}
+
+/* ============================================================
+   SCROLL INDICATOR
+   ============================================================ */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 45px;
+    background: linear-gradient(180deg, transparent, var(--gold));
+    animation: scrollLine 2s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.5; }
+}
+
+/* ============================================================
+   SECTION
+   ============================================================ */
+.section {
+    padding: 140px 0;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 90px;
+}
+
+.section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 24px;
+    display: inline-block;
+    position: relative;
+    padding: 0 50px;
+}
+
+.section-eyebrow::before,
+.section-eyebrow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+}
+
+.section-eyebrow::before { left: 0; }
+.section-eyebrow::after { right: 0; }
+
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5.5vw, 76px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    color: var(--cream);
+    margin-bottom: 28px;
+}
+
+.section-title .gold {
+    color: var(--gold);
+    font-style: italic;
+}
+
+.section-description {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+}
+
+.service {
+    padding: 52px 40px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--black);
+}
+
+.service::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201, 162, 39, 0.08), rgba(212, 165, 116, 0.03));
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+
+.service:hover::before { opacity: 1; }
+
+.service:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 80px rgba(201, 162, 39, 0.15);
+    border-color: var(--border-strong);
+}
+
+.service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: block;
+    transition: transform 0.6s;
+    position: relative;
+    z-index: 1;
+}
+
+.service:hover .service-num { transform: translateX(8px); }
+
+.service h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    color: var(--cream);
+    margin-bottom: 14px;
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+}
+
+.service p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+}
+
+.service-list {
+    list-style: none;
+    position: relative;
+    z-index: 1;
+}
+
+.service-list li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.3s, padding-left 0.3s;
+}
+
+.service-list li::before {
+    content: '— ';
+    color: var(--gold);
+    font-weight: 900;
+}
+
+.service-list li:hover {
+    color: var(--cream);
+    padding-left: 8px;
+}
+
+.service-list li:last-child { border-bottom: none; }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.about-content { padding: 40px 0; }
+
+.about-content .section-title {
+    text-align: left;
+    margin-bottom: 28px;
+}
+
+.about-content p {
+    font-size: 15px;
+    line-height: 2;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    font-weight: 300;
+}
+
+.about-content p strong {
+    color: var(--gold);
+    font-weight: 500;
+}
+
+.about-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-top: 36px;
+}
+
+.about-stat {
+    border-left: 2px solid var(--gold);
+    padding-left: 22px;
+}
+
+.about-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -2px;
+}
+
+.about-stat-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ============================================================
+   QUOTE
+   ============================================================ */
+.quote-section {
+    background: var(--black-soft);
+    padding: 140px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.quote-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.08), transparent 70%);
+    animation: slowFloat 18s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.quote {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    line-height: 0.5;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 24px;
+    opacity: 0.6;
+}
+
+.quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    letter-spacing: -0.5px;
+    color: var(--cream);
+    margin-bottom: 40px;
+}
+
+.quote-author {
+    font-size: 11px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.marquee {
+    padding: 50px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--black);
+    border-bottom: 1px solid var(--border);
+}
+
+.marquee-track {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 50s linear infinite;
+}
+
+.marquee-track span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -1px;
+    color: var(--gold);
+    margin: 0 60px;
+    display: inline-block;
+    vertical-align: middle;
+    opacity: 0.8;
+}
+
+.marquee-track span::after {
+    content: '·';
+    color: var(--cream);
+    margin-left: 60px;
+    font-style: normal;
+    opacity: 0.4;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+/* ============================================================
+   VALUES
+   ============================================================ */
+.values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+}
+
+.value {
+    text-align: center;
+    padding: 44px 24px;
+    border: 1px solid var(--border);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+}
+
+.value::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.6s;
+}
+
+.value:hover::before { transform: scaleX(1); }
+
+.value:hover {
+    transform: translateY(-8px);
+    border-color: var(--border-strong);
+    box-shadow: 0 30px 60px rgba(201, 162, 39, 0.15);
+}
+
+.value-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+    line-height: 1;
+}
+
+.value h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    color: var(--cream);
+    margin-bottom: 14px;
+}
+
+.value p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* ============================================================
+   CTA — EMPTY (no text, no buttons)
+   ============================================================ */
+.cta-empty {
+    padding: 120px 0;
+    background: var(--black-soft);
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-empty::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.06), transparent 70%);
+    animation: slowFloat 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* ============================================================
+   FOOTER — MINIMAL (only brand + nav)
+   ============================================================ */
+footer {
+    background: var(--black);
+    padding: 70px 0 36px;
+    border-top: 1px solid var(--border);
+    position: relative;
+}
+
+.footer-minimal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    max-width: 420px;
+    flex: 1;
+    min-width: 280px;
+}
+
+.footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 7px;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: block;
+}
+
+.footer-logo .gold { color: var(--gold); }
+
+.footer-brand p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.footer-nav-col h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    font-weight: 500;
+}
+
+.footer-nav-col ul { list-style: none; }
+
+.footer-nav-col li { margin-bottom: 10px; }
+
+.footer-nav-col a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 300;
+    transition: color 0.3s;
+}
+
+.footer-nav-col a:hover { color: var(--gold); }
+
+.footer-bottom {
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-bottom p {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+    .footer-minimal { flex-direction: column; gap: 40px; }
+    .about { grid-template-columns: 1fr; gap: 50px; }
+}
+
+@media (max-width: 900px) {
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 9px; letter-spacing: 2px; }
+    .nav-logo { font-size: 18px; letter-spacing: 4px; }
+}
+
+@media (max-width: 768px) {
+    .container { padding: 0 20px; }
+
+    .nav { padding: 18px 0; }
+    .nav.scrolled { padding: 12px 0; }
+    .nav-inner { flex-direction: column; gap: 14px; }
+    .nav-logo { font-size: 16px; letter-spacing: 4px; }
+    .nav-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .nav-links a { font-size: 9px; letter-spacing: 2px; }
+
+    .hero { padding: 160px 0 100px; }
+    .hero-content { padding: 0 16px; }
+    .hero-title { letter-spacing: -2px; }
+    .hero-title .line,
+    .hero-title .gold,
+    .hero-title .outline { white-space: normal; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+    .btn { justify-content: center; padding: 16px 32px; font-size: 10px; letter-spacing: 3px; }
+
+    .section { padding: 80px 0; }
+    .section-header { margin-bottom: 50px; }
+
+    .service { padding: 36px 24px; }
+
+    .about-stats { grid-template-columns: 1fr; gap: 22px; }
+    .about-stat-num { font-size: 36px; }
+
+    .marquee { padding: 36px 0; }
+    .marquee-track span { font-size: 30px; margin: 0 32px; }
+    .marquee-track span::after { margin-left: 32px; }
+
+    .quote-section { padding: 90px 0; }
+    .quote-mark { font-size: 70px; }
+
+    .value { padding: 36px 20px; }
+
+    .cta-empty { padding: 80px 0; }
+
+    footer { padding: 50px 0 30px; }
+    .footer-minimal { gap: 32px; margin-bottom: 36px; }
+    .footer-logo { font-size: 20px; letter-spacing: 5px; }
+    .footer-nav { gap: 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 480px) {
+    .nav-links a { font-size: 8px; letter-spacing: 1.5px; }
+    .hero-title { font-size: clamp(36px, 11vw, 60px); }
+    .hero-description { font-size: 14px; }
+    .hero-eyebrow { font-size: 9px; letter-spacing: 6px; padding: 0 40px; }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after { width: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+    <div class="container">
+        <div class="nav-inner">
+            <div class="nav-logo">MAISON NOIR</div>
+            <ul class="nav-links">
+                <li><a href="#services">სერვისები</a></li>
+                <li><a href="#about">შესახებ</a></li>
+                <li><a href="#values">ღირებულებები</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-content">
+        <span class="hero-eyebrow reveal">პრემიუმ სტუდია</span>
+        <h1 class="hero-title reveal reveal-delay-1">
+            <span class="line">ჩვენ ვქმნით</span>
+            <span class="gold">ხელოვნებას</span>
+            <span class="outline">და ღირებულებას</span>
+        </h1>
+        <p class="hero-description reveal reveal-delay-2">
+            ყოველი დეტალი მნიშვნელოვანია. ყოველი ხაზი, ყოველი ფერი, ყოველი სივრცე — ეს არის ჩვენი ხელობა.
+        </p>
+        <div class="hero-actions reveal reveal-delay-3">
+            <a href="#services" class="btn btn-gold"><span>სერვისები</span></a>
+        </div>
+    </div>
+    <div class="scroll-indicator reveal reveal-delay-4">
+        <span>ჩამოსქროლე</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow reveal">რას ვაკეთებთ</span>
+            <h2 class="section-title reveal reveal-delay-1">
+                ჩვენი <span class="gold">ხელოვნება</span>
+            </h2>
+            <p class="section-description reveal reveal-delay-2">
+                ჩვენ ვქმნით ყოველ დეტალს ხელით, სიყვარულით და ყურადღებით. ეს არის ჩვენი ფილოსოფია.
+            </p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service reveal">
+                <span class="service-num">01</span>
+                <h3>დიზაინი</h3>
+                <p>თანამედროვე, დახვეწილი და ფუნქციონალური დიზაინი, რომელიც გამოხატავს თქვენს ხასიათს.</p>
+                <ul class="service-list">
+                    <li>ბრენდის იდენტობა</li>
+                    <li>ვიზუალური სტილი</li>
+                    <li>ტიპოგრაფია</li>
+                    <li>ფერების სისტემა</li>
+                </ul>
+            </div>
+
+            <div class="service reveal reveal-delay-1">
+                <span class="service-num">02</span>
+                <h3>დეველოპმენტი</h3>
+                <p>სწრაფი, უსაფრთხო და სტაბილური კოდი. ვიყენებთ თანამედროვე ტექნოლოგიებს.</p>
+                <ul class="service-list">
+                    <li>ვებსაიტები</li>
+                    <li>აპლიკაციები</li>
+                    <li>API ინტეგრაცია</li>
+                    <li>მონაცემთა ბაზები</li>
+                </ul>
+            </div>
+
+            <div class="service reveal reveal-delay-2">
+                <span class="service-num">03</span>
+                <h3>სტრატეგია</h3>
+                <p>ბიზნეს სტრატეგია, რომელიც ეფუძნება მონაცემებს და მიზნად ისახავს ზრდას.</p>
+                <ul class="service-list">
+                    <li>ბაზრის კვლევა</li>
+                    <li>პოზიციონირება</li>
+                    <li>მარკეტინგი</li>
+                    <li>ანალიტიკა</li>
+                </ul>
+            </div>
+
+            <div class="service reveal">
+                <span class="service-num">04</span>
+                <h3>კონსალტინგი</h3>
+                <p>პროფესიონალური კონსულტაცია ტექნოლოგიების, დიზაინისა და ბიზნესის სფეროში.</p>
+                <ul class="service-list">
+                    <li>ტექნიკური აუდიტი</li>
+                    <li>დიზაინის მიმოხილვა</li>
+                    <li>ბიზნეს ანალიზი</li>
+                    <li>რეკომენდაციები</li>
+                </ul>
+            </div>
+
+            <div class="service reveal reveal-delay-1">
+                <span class="service-num">05</span>
+                <h3>მხარდაჭერა</h3>
+                <p>24/7 ტექნიკური მხარდაჭერა. ყოველთვის ხელმისაწვდომი ვართ თქვენთვის.</p>
+                <ul class="service-list">
+                    <li>განახლებები</li>
+                    <li>უსაფრთხოება</li>
+                    <li>მონიტორინგი</li>
+                    <li>სწრაფი რეაგირება</li>
+                </ul>
+            </div>
+
+            <div class="service reveal reveal-delay-2">
+                <span class="service-num">06</span>
+                <h3>ინოვაცია</h3>
+                <p>ახალი ტექნოლოგიები და ინოვაციური მიდგომები, რომლებიც გამოარჩევს თქვენს ბრენდს.</p>
+                <ul class="service-list">
+                    <li>AI ინტეგრაცია</li>
+                    <li>ავტომატიზაცია</li>
+                    <li>მომავლის ტექნოლოგიები</li>
+                    <li>კვლევა და განვითარება</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+    <div class="container">
+        <div class="about">
+            <div class="about-content">
+                <span class="section-eyebrow reveal">ჩვენ შესახებ</span>
+                <h2 class="section-title reveal reveal-delay-1">
+                    ხელობა, <span class="gold">რომელიც</span><br>
+                    რჩება
+                </h2>
+                <p class="reveal reveal-delay-2">
+                    ჩვენ ვართ გუნდი, რომელიც აერთიანებს <strong>ტრადიციას</strong> და <strong>თანამედროვეობას</strong>. ჩვენ გვჯერა, რომ ნამდვილი სილამაზე დეტალებში იმალება.
+                </p>
+                <p class="reveal reveal-delay-3">
+                    ყოველი პროექტი ჩვენთვის განსაკუთრებულია. ჩვენ ვქმნით არა მხოლოდ პროდუქტს, არამედ გამოცდილებას, რომელიც რჩება მეხსიერებაში.
+                </p>
+
+                <div class="about-stats reveal reveal-delay-4">
+                    <div class="about-stat">
+                        <div class="about-stat-num">150+</div>
+                        <div class="about-stat-label">პროექტი</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="about-stat-num">98%</div>
+                        <div class="about-stat-label">კმაყოფილი</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="about-stat-num">5</div>
+                        <div class="about-stat-label">წელი</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="about-stat-num">24/7</div>
+                        <div class="about-stat-label">მხარდაჭერა</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+    <div class="container">
+        <div class="quote reveal">
+            <span class="quote-mark">"</span>
+            <p class="quote-text">
+                სილამაზე დეტალებშია. სრულყოფილება კი არა ერთ დეტალში, არამედ ყველა მათგანში.
+            </p>
+            <span class="quote-author">— MAISON NOIR</span>
+        </div>
+    </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+    <div class="marquee-track">
+        <span>ხელოვნება</span>
+        <span>დეტალი</span>
+        <span>ხელობა</span>
+        <span>ტრადიცია</span>
+        <span>სილამაზე</span>
+        <span>პრემიუმ</span>
+        <span>ხელოვნება</span>
+        <span>დეტალი</span>
+        <span>ხელობა</span>
+        <span>ტრადიცია</span>
+        <span>სილამაზე</span>
+        <span>პრემიუმ</span>
+    </div>
+</div>
+
+<!-- VALUES -->
+<section class="section" id="values">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow reveal">ჩვენი ღირებულებები</span>
+            <h2 class="section-title reveal reveal-delay-1">
+                რაც <span class="gold">გვამოძრავებს</span>
+            </h2>
+        </div>
+
+        <div class="values">
+            <div class="value reveal">
+                <span class="value-icon">01</span>
+                <h4>საიმედოობა</h4>
+                <p>ჩვენ ვასრულებთ ყველა პროექტს დროულად და ხარისხიანად. თქვენი ნდობა ჩვენთვის ყველაზე მნიშვნელოვანია.</p>
+            </div>
+
+            <div class="value reveal reveal-delay-1">
+                <span class="value-icon">02</span>
+                <h4>დახვეწილობა</h4>
+                <p>ყოველი დეტალი მნიშვნელოვანია. ჩვენ ვქმნით პროდუქტს, რომლითაც თავად ვიამაყებდით.</p>
+            </div>
+
+            <div class="value reveal reveal-delay-2">
+                <span class="value-icon">03</span>
+                <h4>ინოვაცია</h4>
+                <p>ჩვენ ვიყენებთ უახლეს ტექნოლოგიებს, რომ თქვენი პროექტი იყოს მომავლისკენ მიმართული.</p>
+            </div>
+
+            <div class="value reveal reveal-delay-3">
+                <span class="value-icon">04</span>
+                <h4>პარტნიორობა</h4>
+                <p>ჩვენ არ ვართ უბრალოდ შემსრულებელი. ჩვენ ვართ თქვენი პარტნიორი წარმატებისკენ.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EMPTY CTA SPACE -->
+<section class="cta-empty"></section>
+
+<!-- FOOTER — MINIMAL -->
+<footer>
+    <div class="container">
+        <div class="footer-minimal">
+            <div class="footer-brand">
+                <span class="footer-logo">MAISON <span class="gold">NOIR</span></span>
+                <p>პრემიუმ სტუდია, რომელიც ქმნის ხელოვნებას და ღირებულებას. ყოველი დეტალი მნიშვნელოვანია.</p>
+            </div>
+
+            <div class="footer-nav">
+                <div class="footer-nav-col">
+                    <h4>ნავიგაცია</h4>
+                    <ul>
+                        <li><a href="#services">სერვისები</a></li>
+                        <li><a href="#about">შესახებ</a></li>
+                        <li><a href="#values">ღირებულებები</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 MAISON NOIR</p>
+            <p>შექმნილია ხელობით</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* NAVIGATION SCROLL */
+const nav = document.getElementById('nav');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+});
+
+/* SCROLL REVEAL */
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -80px 0px'
+});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* SMOOTH SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+/* PARALLAX GRID */
+window.addEventListener('scroll', () => {
+    const grid = document.querySelector('.hero-grid-lines');
+    if (grid) {
+        const scrolled = window.scrollY;
+        if (scrolled < window.innerHeight) {
+            grid.style.transform = `translateY(${scrolled * 0.3}px)`;
+        }
+    }
+});
+
+console.log('%cMAISON NOIR', 'color: #c9a227; font-size: 42px; font-weight: 300; letter-spacing: 12px; font-family: serif; text-shadow: 0 0 30px #c9a227;');
+console.log('%c© 2026', 'color: rgba(201, 162, 39, 0.5); font-size: 11px; letter-spacing: 3px;');
+</script>
+
+</body>
+</html>
